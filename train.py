@@ -1,3 +1,10 @@
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader as DL
+import torch.nn.functional as F
+import time
+
 # Step 3: Training Function
 def train_model(model, train_loader, valid_loader, criterion, optimizer, num_epochs=4):
     print("Starting training...")

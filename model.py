@@ -1,3 +1,10 @@
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader as DL
+import torch.nn.functional as F
+import time
+
 # Assume `train_dl`, `valid_dl`, and `test_dl` are already created from preprocessing.
 # Step 1: Define the Residual CNN Model
 class ResidualBlock(nn.Module):

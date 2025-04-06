@@ -20,6 +20,32 @@ from sklearn.preprocessing import LabelEncoder
 
 !unzip "LHNT_EEG.zip"
 
+def getAllPickles(directory="LHNT EEG"):
+    folders = [drctry for drctry in os.listdir(directory) if os.path.isdir(os.path.join(directory, drctry))]
+    files = []
+    for folder in folders:
+        folder_files = os.listdir(os.path.join(directory, folder))
+        for file in folder_files:
+            if ".pkl" in file:
+                files.append(os.path.join(directory, folder, file))
+    return files
+
+def npFromPickle(pickle_files):
+    np_data = []
+    labels = [] # 0 is left, 1 is right
+    for file in pickle_files:
+        with open(file, "rb") as f:
+            data1 = pickle.load(f)
+            np_data.append(data1[0])
+        if 'right' in file.split('/')[-1]:
+            labels.append(1)
+        else:
+            labels.append(0)
+    return np_data, labels
+
+np_data, labels = npFromPickle(getAllPickles())
+print(len(np_data), len(labels))
+
 # applying a bandpass filter
 def bandpass_filter(signal, crit_freq = [1, 40], sampling_freq = 125, plot = False, channel = 0):
   order = 4
